@@ -36,7 +36,8 @@ namespace ListaTodosParticipantes
 
                     foreach(var curso in oferta.Cursos)
                     {
-                        
+                        SelecionaCurso(driver, curso);
+                        curso.GrausTurnos = GetGrausTurnos(driver);
                     }
                 }
             }
@@ -53,6 +54,24 @@ namespace ListaTodosParticipantes
             var liUniversidade = driver.FindElement(By.XPath("//html/body/ul/li[1]/a"));
             liUniversidade.Click();
         }
+
+
+        public static void SelecionaLocalOferta(IWebDriver driver, LocalOferta oferta)
+        {
+            var localOferta = driver.FindElement(By.Id("local_oferta"));
+            var select = new SelectElement(localOferta);
+            select.SelectByValue(oferta.CodigoSisu);
+            System.Threading.Thread.Sleep(20);
+        }
+
+        private static void SelecionaCurso(IWebDriver driver, Curso curso)
+        {
+            var cursoSelect = driver.FindElement(By.Id("curso_p"));
+            var select = new SelectElement(cursoSelect);
+            select.SelectByValue(curso.CodigoSisu);
+            System.Threading.Thread.Sleep(20);
+        }
+
 
         public static void HabilitaLocalOferta(IWebDriver driver)
         {
@@ -106,12 +125,26 @@ namespace ListaTodosParticipantes
             return cursos;
         }
 
-        public static void SelecionaLocalOferta(IWebDriver driver, LocalOferta oferta)
+        public static List<GrauTurno> GetGrausTurnos(IWebDriver driver)
         {
-            var localOferta = driver.FindElement(By.Id("local_oferta"));
-            var select = new SelectElement(localOferta);
-            select.SelectByValue(oferta.CodigoSisu);
-            System.Threading.Thread.Sleep(20);
+            var select = driver.FindElement(By.Id("grau_turno_p"));
+            var options = (new SelectElement(select)).Options;
+            var grausTurnos = new List<GrauTurno>();
+
+            foreach (var option in options)
+            {
+                if (option.Text.ToUpper().Contains("SELECIONE"))
+                    continue;
+
+                grausTurnos.Add(
+                    new GrauTurno()
+                    {
+                        Nome = option.Text,
+                        CodigoSisu = option.GetAttribute("value")
+                    });
+            }
+
+            return grausTurnos;
         }
     }
 }
