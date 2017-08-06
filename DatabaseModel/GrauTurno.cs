@@ -1,8 +1,8 @@
 ﻿namespace DatabaseModel
 {
-    public class Aluno
+    public class GrauTurno
     {
-        public int AlunoId { get; set; }
         public string Nome { get; set; }
+        public string CodigoSisu { get; set; }
     }
 }

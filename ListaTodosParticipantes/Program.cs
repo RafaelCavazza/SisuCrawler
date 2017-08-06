@@ -26,14 +26,19 @@ namespace ListaTodosParticipantes
             foreach (var universidade in universidades)
             {
                 SelecionarUniversidade(driver, universidade);
+                HabilitaLocalOferta(driver);
+                universidade.LocaisOferta = GetLocaisOferta(driver);
 
-                var localOferta = driver.FindElementById("local_oferta");
-                localOferta.Click();
-                System.Threading.Thread.Sleep(500);
-                localOferta.Click();
+                foreach (var oferta in universidade.LocaisOferta)
+                {
+                    SelecionaLocalOferta(driver, oferta);
+                    oferta.Cursos = GetCursos(driver);
 
-                System.Threading.Thread.Sleep(100);
-                var locaisOferta = (new SelectElement(localOferta)).Options;
+                    foreach(var curso in oferta.Cursos)
+                    {
+                        
+                    }
+                }
             }
 
             Console.ReadKey();
@@ -49,15 +54,64 @@ namespace ListaTodosParticipantes
             liUniversidade.Click();
         }
 
-        public static void HabilitaLocalOferta()
+        public static void HabilitaLocalOferta(IWebDriver driver)
         {
-
+            var localOferta = driver.FindElement(By.Id("local_oferta"));
+            localOferta.Click();
+            System.Threading.Thread.Sleep(500);
+            localOferta.Click();
         }
 
         public static List<LocalOferta> GetLocaisOferta(IWebDriver driver)
         {
-            var localOferta = driver.FindElementById("local_oferta");
-            return null;
+            var localOferta = driver.FindElement(By.Id("local_oferta"));
+            var options = (new SelectElement(localOferta)).Options;
+            var locais = new List<LocalOferta>();
+
+            foreach (var option in options)
+            {
+                if (option.Text.ToUpper().Contains("SELECIONE"))
+                    continue;
+
+                locais.Add(
+                    new LocalOferta()
+                    {
+                        Nome = option.Text,
+                        CodigoSisu = option.GetAttribute("value")
+                    });
+            }
+
+            return locais;
+        }
+
+        public static List<Curso> GetCursos(IWebDriver driver)
+        {
+            var select = driver.FindElement(By.Id("curso_p"));
+            var options = (new SelectElement(select)).Options;
+            var cursos = new List<Curso>();
+
+            foreach (var option in options)
+            {
+                if (option.Text.ToUpper().Contains("SELECIONE"))
+                    continue;
+
+                cursos.Add(
+                    new Curso()
+                    {
+                        Nome = option.Text,
+                        CodigoSisu = option.GetAttribute("value")
+                    });
+            }
+
+            return cursos;
+        }
+
+        public static void SelecionaLocalOferta(IWebDriver driver, LocalOferta oferta)
+        {
+            var localOferta = driver.FindElement(By.Id("local_oferta"));
+            var select = new SelectElement(localOferta);
+            select.SelectByValue(oferta.CodigoSisu);
+            System.Threading.Thread.Sleep(20);
         }
     }
 }
