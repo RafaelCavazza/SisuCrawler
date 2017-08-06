@@ -1,0 +1,5 @@
+C:\Users\rafae\Documents\visual studio 2017\Projects\SisuCrawler\DatabaseModel\bin\Debug\DatabaseModel.dll
+C:\Users\rafae\Documents\visual studio 2017\Projects\SisuCrawler\DatabaseModel\bin\Debug\DatabaseModel.pdb
+C:\Users\rafae\Documents\visual studio 2017\Projects\SisuCrawler\DatabaseModel\obj\Debug\DatabaseModel.csprojResolveAssemblyReference.cache
+C:\Users\rafae\Documents\visual studio 2017\Projects\SisuCrawler\DatabaseModel\obj\Debug\DatabaseModel.dll
+C:\Users\rafae\Documents\visual studio 2017\Projects\SisuCrawler\DatabaseModel\obj\Debug\DatabaseModel.pdb
