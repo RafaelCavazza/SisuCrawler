@@ -14,5 +14,7 @@ namespace DatabaseModel
         public string CodigoSisu { get; set; }
 
         public virtual List<GrauTurno> GrausTurnos { get; set; }
+
+        public virtual LocalOferta LocalOferta { get; set; }
     }
 }

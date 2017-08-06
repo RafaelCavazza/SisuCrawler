@@ -13,5 +13,7 @@ namespace DatabaseModel
         public string Nome { get; set; }
         public string CodigoSisu { get; set; }
         public virtual List<Curso> Cursos { get; set; }
+
+        public virtual Universidade Universidade { get; set; }
     }
 }

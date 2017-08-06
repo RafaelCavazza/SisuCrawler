@@ -11,8 +11,8 @@ namespace DatabaseModel
         // If you wish to target a different database and/or database provider, modify the 'DadosSisu' 
         // connection string in the application configuration file.
 
-        public DbSet<Aluno> Alunos { get; set; }
-        public DbSet<Aluno> Cursos { get; set; }
+        public DbSet<Aprovado> Aprovados { get; set; }
+        public DbSet<Aprovado> Cursos { get; set; }
         public DbSet<GrauTurno> GrausTurnos { get; set; }
         public DbSet<LocalOferta> LocaisOferta { get; set; }
         public DbSet<Universidade> Universidades { get; set; }

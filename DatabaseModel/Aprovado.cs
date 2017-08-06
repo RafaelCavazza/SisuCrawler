@@ -3,12 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DatabaseModel
 {
-    public class Aluno
+    public class Aprovado
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AlunoId { get; set; }
+        public int AprovadoId { get; set; }
 
         public string Nome { get; set; }
+
+        public virtual GrauTurno GrauTurno { get; set; }
     }
 }
