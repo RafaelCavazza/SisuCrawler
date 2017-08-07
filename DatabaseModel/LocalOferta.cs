@@ -14,6 +14,9 @@ namespace DatabaseModel
         public string CodigoSisu { get; set; }
         public virtual List<Curso> Cursos { get; set; }
 
+        public int UniversidadeId { get; set; }
+
+        [ForeignKey("UniversidadeId")]
         public virtual Universidade Universidade { get; set; }
     }
 }

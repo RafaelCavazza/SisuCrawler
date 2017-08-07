@@ -15,6 +15,9 @@ namespace DatabaseModel
 
         public virtual List<GrauTurno> GrausTurnos { get; set; }
 
+        public int LocalOfertaId { get; set; }
+
+        [ForeignKey("LocalOfertaId")]
         public virtual LocalOferta LocalOferta { get; set; }
     }
 }

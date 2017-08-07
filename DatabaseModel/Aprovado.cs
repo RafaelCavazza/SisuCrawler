@@ -10,7 +10,13 @@ namespace DatabaseModel
         public int AprovadoId { get; set; }
 
         public string Nome { get; set; }
+        public double Nota { get; set; }
+        public string Inscricao { get; set; }
+        public int Classificacao { get; set; }
+        public string TipoConcorrencia { get; set; }
+        public int GrauTurnoId { get; set; }
 
+        [ForeignKey("GrauTurnoId")]
         public virtual GrauTurno GrauTurno { get; set; }
     }
 }

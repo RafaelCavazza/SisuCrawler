@@ -54,12 +54,22 @@
     <Compile Include="DadosSisu.cs" />
     <Compile Include="GrauTurno.cs" />
     <Compile Include="LocalOferta.cs" />
+    <Compile Include="Migrations\201708070048396_1-Migration.cs" />
+    <Compile Include="Migrations\201708070048396_1-Migration.Designer.cs">
+      <DependentUpon>201708070048396_1-Migration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Universidade.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201708070048396_1-Migration.resx">
+      <DependentUpon>201708070048396_1-Migration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

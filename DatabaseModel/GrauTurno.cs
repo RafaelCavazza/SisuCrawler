@@ -14,6 +14,10 @@ namespace DatabaseModel
         public string CodigoSisu { get; set; }
 
         public virtual List<Aprovado> Alunos { get; set;}
+
+        public int CursoId { get; set; }
+
+        [ForeignKey("CursoId")]
         public virtual Curso Curso { get; set; }
     }
 }
