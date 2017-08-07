@@ -12,6 +12,10 @@ namespace DatabaseModel
 
         public string Nome { get; set; }
 
+        public int SolicitacaoDadosId { get; set; }
+
+        [ForeignKey("SolicitacaoDadosId")]
+        public virtual SolicitacaoDados SolicitacaoDados { get; set; }
         public virtual List<LocalOferta> LocaisOferta { get; set; }
     }
 }

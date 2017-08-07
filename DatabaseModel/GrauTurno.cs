@@ -13,7 +13,7 @@ namespace DatabaseModel
         public string Nome { get; set; }
         public string CodigoSisu { get; set; }
 
-        public virtual List<Aprovado> Alunos { get; set;}
+        public virtual List<Aprovado> Aprovados { get; set;}
 
         public int CursoId { get; set; }
 

@@ -11,6 +11,7 @@ namespace DatabaseModel
         public DbSet<GrauTurno> GrausTurnos { get; set; }
         public DbSet<LocalOferta> LocaisOferta { get; set; }
         public DbSet<Universidade> Universidades { get; set; }
+        public DbSet<SolicitacaoDados> SolicitacaoDados { get; set; }
 
         public DadosSisu(): base()
         {
