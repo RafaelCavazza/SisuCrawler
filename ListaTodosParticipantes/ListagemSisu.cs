@@ -83,16 +83,36 @@ namespace ListaTodosParticipantes
                         if (SelecionarUniversidade(universidade) == false)
                             continue;
 
-                        HabilitaLocalOferta();
-                        SelecionaLocalOferta(oferta);
-                        SelecionaCurso(curso);
-                        SelecionaGrauTurno(grauTurno);
-                        ClickBuscar();
+                        var erros = 0;
+                        var finished = false;
 
-                        if(grauTurno.Aprovados ==null)
-                            grauTurno.Aprovados = new List<Aprovado>();
 
-                        grauTurno.Aprovados.AddRange(GetAprovados());
+                        while (erros < 5 && finished == false)
+                        {
+                            try
+                            {
+                                HabilitaLocalOferta();
+                                SelecionaLocalOferta(oferta);
+                                SelecionaCurso(curso);
+                                SelecionaGrauTurno(grauTurno);
+                                ClickBuscar();
+
+                                if (grauTurno.Aprovados == null)
+                                    grauTurno.Aprovados = new List<Aprovado>();
+
+                                grauTurno.Aprovados.AddRange(GetAprovados());
+                                finished = true;
+                            }
+                            catch
+                            {
+                                erros++;
+                                driver.Navigate().GoToUrl("http://sisu.mec.gov.br/selecionados");
+                                Thread.Sleep(3000);
+                            }
+
+                            if (finished == false)
+                                throw new Exception("Limite máximo de tentativas atingido");
+                        }
                     }
                 }
             }
@@ -125,15 +145,22 @@ namespace ListaTodosParticipantes
 
         private bool ClickPrimeiroLiUniversidade()
         {
-            var liUniversidade = driver.FindElement(By.XPath("//html/body/ul/li[1]/a"));
-            var text = liUniversidade.Text;
+            try
+            {
+                var liUniversidade = driver.FindElement(By.XPath("//html/body/ul/li[1]/a"));
+                var text = liUniversidade.Text;
 
-            if (string.IsNullOrWhiteSpace(text) || liUniversidade.Displayed == false)
+                if (string.IsNullOrWhiteSpace(text) || liUniversidade.Displayed == false)
+                    return false;
+
+                liUniversidade.Click();
+
+                return text.ToUpper().Contains("NÃO FORAM ENCONTRADAS") == false;
+            }
+            catch (Exception)
+            {
                 return false;
-
-            liUniversidade.Click();
-
-            return text.ToUpper().Contains("NÃO FORAM ENCONTRADAS") == false;
+            }
         }
 
         private void SetCampoUniversidade(string texto)
