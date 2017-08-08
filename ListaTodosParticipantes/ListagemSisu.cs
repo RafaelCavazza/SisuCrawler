@@ -86,7 +86,6 @@ namespace ListaTodosParticipantes
                         var erros = 0;
                         var finished = false;
 
-
                         while (erros < 5 && finished == false)
                         {
                             try
@@ -109,10 +108,10 @@ namespace ListaTodosParticipantes
                                 driver.Navigate().GoToUrl("http://sisu.mec.gov.br/selecionados");
                                 Thread.Sleep(3000);
                             }
-
-                            if (finished == false)
-                                throw new Exception("Limite máximo de tentativas atingido");
                         }
+
+                        if (finished == false)
+                            throw new Exception("Limite máximo de tentativas atingido");
                     }
                 }
             }

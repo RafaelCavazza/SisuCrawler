@@ -1,0 +1,67 @@
+-- Comandos SQL para verificação das informações -- 
+
+--SELECT * FROM [dbo].[SolicitacaoDados]
+
+SELECT
+	Universidade.UniversidadeId,
+	Universidade.Nome Universidade,
+	[SolicitacaoDados].CreatedOn,
+	[SolicitacaoDados].[SolicitacaoDadosId],
+	--LocalOferta.Nome Local,
+	--Curso.Nome Curso,
+	--GrauTurno.Nome GrauTurno,
+	COUNT(*) Aprovados
+FROM 
+	[SolicitacaoDados]
+JOIN
+	Universidade ON
+	Universidade.[SolicitacaoDadosId] = [SolicitacaoDados].[SolicitacaoDadosId]
+JOIN
+	LocalOferta ON
+	Universidade.UniversidadeId = LocalOferta.UniversidadeId
+JOIN
+	Curso ON
+	Curso.LocalOfertaId  = LocalOferta.LocalOfertaId
+JOIN
+	GrauTurno ON
+	GrauTurno.CursoId = Curso.CursoId
+JOIN
+	Aprovado ON
+	Aprovado.GrauTurnoId = GrauTurno.GrauTurnoId
+WHERE
+	[SolicitacaoDados].[SolicitacaoDadosId] = 11	
+GROUP BY
+	Universidade.Nome,
+	Universidade.UniversidadeId,
+	[SolicitacaoDados].CreatedOn,
+	[SolicitacaoDados].[SolicitacaoDadosId]
+ORDER BY
+	Universidade.UniversidadeId ASC
+
+
+/*
+DELETE LocalOferta
+DELETE Curso
+DELETE GrauTurno
+DELETE Aprovado
+DELETE Universidade
+DELETE [SolicitacaoDados]*/
+
+--SELECT * FROM [dbo].[SolicitacaoDados]
+
+
+/*
+SELECT
+	SUM(CASE WHEN Qtd > 1 THEN Qtd ELSE 0 END) Repetidos,
+	SUM(Qtd) Total
+FROM
+	(
+		SELECT 
+			Nome,
+			COUNT(Nome) Qtd
+		FROM 
+			Aprovado
+		GROUP BY
+			Nome
+	) as tb
+*/
