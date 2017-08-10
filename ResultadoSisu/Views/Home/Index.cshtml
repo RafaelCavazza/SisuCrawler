@@ -1,31 +1,93 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using DatabaseModel;
+
+@{
+    ViewBag.Title = "Resultado Sisu";
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    
+    <h1 style="text-align:center">
+        Resultado Sisu 2º semestre 2017
+    </h1>
+
+    <p class="lead" style="text-align:center"> 
+        Envie o arquivos .txt com os nomes dos seus alunos.
+    </p>
+
+    <p style="text-align:center">
+        Clique <a href="~/Content/Modelo.txt" download>AQUI</a> para baixar o modelo.
+    </p>
+
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+<div style="text-align:center">
+    <form method="post" enctype="multipart/form-data" action="">
+        <div class="form-group">
+
+            <div class="col-md-offset-4 col-md-4">
+                <p>
+                    <input type="file" name="arquivo" /> 
+                </p>
+                <p>
+                    <button type="submit" class="btn btn-primary btn-lg">Enviar Arquivo</button>
+                </p>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+
+<div class="container">
+
+    @{
+        var alunos = new List<string>();
+        var aprovados = new List<Aprovado>();
+
+        if (ViewBag.Alunos != null && ViewBag.Aprovados != null)
+        {
+            alunos = (List<string>)ViewBag.Alunos;
+            aprovados = (List<Aprovado>)ViewBag.Aprovados;
+        }
+    }
+
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Aluno</th>
+                <th>Nome Sisu</th>
+                <th>Faculdade</th>
+                <th>Posição</th>
+                <th>Tipo de Concorrência</th>
+                <th>Inscrição Enem</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody>  
+            @{
+                foreach (var aluno in alunos)
+                {
+                    var aprovacoes = aprovados.Where(a => a.Nome.Contains(aluno)).ToArray();
+                    for (var i = 0; i < aprovacoes.Length; i++)
+                    {
+                        <tr>
+                            @if (i == 0)
+                            {
+                                <td rowspan="@(@aprovacoes.Length)">@aluno</td>
+                            }
+                            <td>@(aprovacoes[i]?.Nome)</td>
+                            <td>@(aprovacoes[i]?.GrauTurno?.Curso?.LocalOferta?.Universidade.Nome)</td>
+                            <td>@(aprovacoes[i]?.Classificacao)</td>
+                            <td>@(aprovacoes[i]?.TipoConcorrencia)</td>
+                            <td>@(aprovacoes[i]?.Inscricao)</td>
+                            <td>@(aprovacoes[i]?.Nota)</td>
+
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
 </div>
